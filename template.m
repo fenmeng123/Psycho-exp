@@ -4,6 +4,7 @@ clc;
 clear;
 %% 手动参数设置区
 textsize = 25;%屏幕上所呈现的文字大小
+instruct_str = '请按S键开始';
 %% 增强程序的稳定性
 Screen('Preference', 'SkipSyncTests', 1);
 Screen('Preference', 'VisualDebuglevel', 0);
@@ -36,9 +37,18 @@ Priority(MaxPriority(main_window));
 Screen('TextSize',main_window,textsize);
 Screen('TextFont',main_window,'-:lang=zh-cn');
 
+DrawFormattedText(main_window,double(instruct_str),'center','center',255);
+Screen('Flip',main_window);
 
-
-
+KbReleaseWait();
+while true
+    [~,~,kc] = KbCheck();
+    if kc(KbName('s'))
+        Recordtime = datetime;%记录实验开始的时间
+        eStart = GetSecs;
+        break
+    end
+end
 %% 实验程序结束判断
 [KD,KeyCode,~] = KbWait([],2,0.01);%获取被试的按键输入
 %KD是按键标志位，有键被按下则置1
