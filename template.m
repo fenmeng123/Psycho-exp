@@ -9,9 +9,10 @@ Screen('Preference', 'SkipSyncTests', 1);
 Screen('Preference', 'VisualDebuglevel', 0);
 Screen('Preference', 'SuppressAllWarnings', 1);
 %% UI界面输入被试信息与实验选项
-
+sub_info = inputdlg('sub-被试编号','被试信息');
 %% 读取所需的实验材料
-
+impath = [pwd,'\picture'];
+[imfile,nimfile] = FileFromFolder(impath,'bmp');
 %% 预处理工作
 addpath([pwd,'\materials']);%添加子函数文件夹到路径内
 KbName('UnifyKeyNames'); %将当前系统的键盘按键命名方案进行标准化
@@ -49,5 +50,8 @@ Screen('CloseAll');
 ListenChar(0);%恢复按键输出
 
 %% 数据处理与记录
-
+cd .\record
+OutputFileName = ['Record_' num2str(Sub) '.xlsx'];
+xlswrite(OutputFileName,Result)
+cd ..
 
